@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101318">
+  <meta name="description" content="A simple daily macro countdown tracker.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>MacroTrack</title>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">YOUR DAILY DASHBOARD</p>
+        <h1>MacroTrack</h1>
+      </div>
+      <button id="settingsBtn" class="icon-button" aria-label="Edit daily goals" title="Edit daily goals">⚙</button>
+    </header>
+
+    <section class="date-row">
+      <div>
+        <p class="eyebrow">TODAY</p>
+        <h2 id="todayLabel">—</h2>
+      </div>
+      <button id="resetBtn" class="text-button">Reset day</button>
+    </section>
+
+    <section class="macro-grid" aria-label="Remaining macros">
+      <article class="macro-card protein">
+        <div class="macro-heading"><span class="dot"></span><span>Protein</span></div>
+        <div class="macro-number"><span id="proteinRemaining">190</span><small>g left</small></div>
+        <div class="progress-track"><div id="proteinBar" class="progress-fill"></div></div>
+        <p class="macro-sub"><span id="proteinConsumed">0</span>g consumed · <span id="proteinGoal">190</span>g goal</p>
+      </article>
+      <article class="macro-card carbs">
+        <div class="macro-heading"><span class="dot"></span><span>Carbs</span></div>
+        <div class="macro-number"><span id="carbsRemaining">500</span><small>g left</small></div>
+        <div class="progress-track"><div id="carbsBar" class="progress-fill"></div></div>
+        <p class="macro-sub"><span id="carbsConsumed">0</span>g consumed · <span id="carbsGoal">500</span>g goal</p>
+      </article>
+      <article class="macro-card fat">
+        <div class="macro-heading"><span class="dot"></span><span>Fat</span></div>
+        <div class="macro-number"><span id="fatRemaining">63</span><small>g left</small></div>
+        <div class="progress-track"><div id="fatBar" class="progress-fill"></div></div>
+        <p class="macro-sub"><span id="fatConsumed">0</span>g consumed · <span id="fatGoal">63</span>g goal</p>
+      </article>
+    </section>
+
+    <section class="entry-panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">FAST FOOD LOGGING</p><h2>Quick entry</h2></div>
+        <span class="pill">No food database</span>
+      </div>
+      <form id="entryForm">
+        <label class="sr-only" for="entryInput">Enter consumed macros</label>
+        <input id="entryInput" autocomplete="off" placeholder="e.g. -90 carbs, -35 protein, -12 fat">
+        <button class="primary-button" type="submit">Add macros</button>
+      </form>
+      <p class="helper">Enter the amount you ate. Example: <strong>90 carbs, 35 protein</strong>. You can also use negative-style shorthand like <strong>-90 carbs</strong>.</p>
+      <p id="entryMessage" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="history-panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">YOUR ENTRIES</p><h2>Today's history</h2></div>
+        <button id="undoBtn" class="text-button" disabled>Undo last</button>
+      </div>
+      <ul id="historyList" class="history-list">
+        <li class="empty-state">Your entries will appear here.</li>
+      </ul>
+    </section>
+
+    <footer><span>MacroTrack</span><span>Your data stays on this device.</span></footer>
+  </main>
+
+  <dialog id="settingsDialog" class="modal">
+    <form id="settingsForm" method="dialog">
+      <div class="section-heading"><div><p class="eyebrow">PERSONALIZE</p><h2>Daily goals</h2></div><button type="button" class="close-button" id="closeSettings" aria-label="Close">×</button></div>
+      <p class="helper">Set your daily targets in grams.</p>
+      <label>Protein (g)<input id="goalProtein" type="number" min="0" max="2000" step="1" required></label>
+      <label>Carbs (g)<input id="goalCarbs" type="number" min="0" max="2000" step="1" required></label>
+      <label>Fat (g)<input id="goalFat" type="number" min="0" max="2000" step="1" required></label>
+      <div class="modal-actions"><button type="button" id="cancelSettings" class="secondary-button">Cancel</button><button type="submit" class="primary-button">Save goals</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="resetDialog" class="modal">
+    <form method="dialog">
+      <h2>Reset today's entries?</h2>
+      <p class="helper">This clears today's logged macros. Your daily goals won't change.</p>
+      <div class="modal-actions"><button class="secondary-button" value="cancel">Cancel</button><button id="confirmReset" class="primary-button danger" value="confirm">Reset entries</button></div>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
